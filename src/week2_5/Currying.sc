@@ -9,38 +9,44 @@ object Currying {
   type transform = Traversable[_] => Traversable[_]
   type save = (Traversable[_]) => Unit
 
+  /**
+   * The generic process function
+   */
   def process(getValues: retrieve)(transformValues: transform)(setValues: save) = {
     val values = getValues()
     val transformedValues = transformValues(values)
     setValues(transformedValues)
   }                                               //> process: (getValues: week2_5.Currying.retrieve)(transformValues: week2_5.Cur
                                                   //| rying.transform)(setValues: week2_5.Currying.save)Unit
-  def loadFromFile(path: String)(): Traversable[Array[String]] = {
+
+  /**
+   * Get values from file
+   */
+  def getValuesFromFile(path: String)(): Traversable[Array[String]] = {
     val src = Source.fromFile(path)
     src.getLines().map(_.split("\t")).toTraversable
-  }                                               //> loadFromFile: (path: String)()Traversable[Array[String]]
+  }                                               //> getValuesFromFile: (path: String)()Traversable[Array[String]]
 
-  def writeToConsole(stringify: Any => String)(results: Traversable[_]): Unit = {
-    results.foreach({
-      x => println(stringify(x))
-    })
-  }                                               //> writeToConsole: (stringify: Any => String)(results: Traversable[_])Unit
-  
-  def writeToFile(stringify: Any => String)(results: Traversable[_]): Unit = {
-    results.foreach({
-      x => println(stringify(x))
-    })
-  }                                               //> writeToFile: (stringify: Any => String)(results: Traversable[_])Unit
-  
   /**
-    * Count the number of exceptions for each developer and write the results to console and file
-    */
+   * Write values to console
+   */
+  def writeValuesToConsole(stringify: Any => String)(results: Traversable[_]): Unit = {
+    results.foreach({
+      x => println(stringify(x))
+    })
+  }                                               //> writeValuesToConsole: (stringify: Any => String)(results: Traversable[_])Uni
+                                                  //| t
+
+  /**
+   * Count the number of exceptions for each developer and write the results to console
+   */
   def countExceptionsByDeveloper() {
     def countExceptions(input: Traversable[_]): Traversable[(Int, String)] = {
       object OrderingByCount extends Ordering[Int] {
         def compare(a: Int, b: Int) = b compare a
       }
 
+      // BAD - Pattern matching is better, not downcasting is best
       val downcastInput = input.asInstanceOf[Traversable[Array[String]]]
       val groups: Map[String, Traversable[Array[String]]] = downcastInput.groupBy(x => x(5)) // 5 is the developer column
       TreeMap[Int, String](groups.map(x => (x._2.size, x._1)).toArray: _*)(OrderingByCount)
@@ -50,9 +56,9 @@ object Currying {
       case (key: Int, value: String) => value + " has " + key + " exceptions"
     }
 
-    def processExceptionsFile = process(loadFromFile("/tmp/exceptions.csv")) _
+    def processExceptionsFile = process(getValuesFromFile("/tmp/exceptions.csv")) _
     def countExceptionsByDeveloper = processExceptionsFile(countExceptions)
-    countExceptionsByDeveloper(writeToConsole(getCountString))
+    countExceptionsByDeveloper(writeValuesToConsole(getCountString))
   }                                               //> countExceptionsByDeveloper: ()Unit
 
   countExceptionsByDeveloper()                    //> bill.lee (Bill Lee) has 3028 exceptions
