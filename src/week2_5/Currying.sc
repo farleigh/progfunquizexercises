@@ -56,9 +56,9 @@ object Currying {
       case (key: Int, value: String) => value + " has " + key + " exceptions"
     }
 
-    def processExceptionsFile = process(getValuesFromFile("/tmp/exceptions.csv")) _
-    def countExceptionsByDev = processExceptionsFile(countExceptions)
-    countExceptionsByDev(writeValuesToConsole(getCountString))
+    def processExceptionsFromFile = process(getValuesFromFile("/tmp/exceptions.csv")) _
+    def processExceptionsToConsole = processExceptionsFromFile(_: transform)(writeValuesToConsole(getCountString))
+    processExceptionsToConsole(countExceptions)
   }                                               //> countExceptionsByDeveloper: ()Unit
 
   countExceptionsByDeveloper()                    //> java.io.FileNotFoundException: /tmp/exceptions.csv (No such file or directo
@@ -71,13 +71,12 @@ object Currying {
                                                   //| 	at scala.io.Source$.fromFile(Source.scala:54)
                                                   //| 	at week2_5.Currying$$anonfun$main$1.week2_5$Currying$$anonfun$$getValues
                                                   //| FromFile$1(week2_5.Currying.scala:25)
-                                                  //| 	at week2_5.Currying$$anonfun$main$1$$anonfun$processExceptionsFile$1$1.a
-                                                  //| pply(week2_5.Currying.scala:57)
-                                                  //| 	at week2_5.Currying$$anonfun$main$1$$anonfun$processExceptionsFile$1$1.a
-                                                  //| pply(week2_5.Currying.scala:57)
+                                                  //| 	at week2_5.Currying$$anonfun$main$1$$anonfun$week2_5$Currying$$anonfun$$
+                                                  //| processExceptionsFromFile$1$1.apply(week2_5.Currying.scala:57)
+                                                  //| 	at week2_5.Currying$$anonfun$main$1$$anonfun$week2_5$Currying$$anonfun$$
+                                                  //| processExceptionsFromFile$1$1.apply(week2_5.Currying.scala:57)
                                                   //| 	at week2_5.Currying$$anonfun$main$1.week2_5$Currying$$anonfun$$process$1
                                                   //| (week2_5.Currying.scala:16)
-                                                  //| 	at week2_5.Currying$$anonfun$main$1$$anonfun$processExceptionsFile$1$2$$
-                                                  //| anonfun$apply$1.appl
+                                                  //| 	at week2_5.Currying$$anonfun$main$1$
                                                   //| Output exceeds cutoff limit.
 }
