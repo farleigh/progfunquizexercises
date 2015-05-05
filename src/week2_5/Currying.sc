@@ -57,31 +57,27 @@ object Currying {
     }
 
     def processExceptionsFile = process(getValuesFromFile("/tmp/exceptions.csv")) _
-    def countExceptionsByDeveloper = processExceptionsFile(countExceptions)
-    countExceptionsByDeveloper(writeValuesToConsole(getCountString))
+    def countExceptionsByDev = processExceptionsFile(countExceptions)
+    countExceptionsByDev(writeValuesToConsole(getCountString))
   }                                               //> countExceptionsByDeveloper: ()Unit
 
-  countExceptionsByDeveloper()                    //> bill.lee (Bill Lee) has 3028 exceptions
-                                                  //| twauchope (Tanner Wauchope) has 1649 exceptions
-                                                  //| virginia.wolfe (Virginia Wolfe) has 1149 exceptions
-                                                  //| cescobar (Caleb Escobar) has 895 exceptions
-                                                  //| cfarleigh (Clinton Farleigh) has 660 exceptions
-                                                  //| ahuang (Angela Huang) has 538 exceptions
-                                                  //| wlee (Wai-Ping Lee) has 467 exceptions
-                                                  //| mjaynes (Mark Jaynes) has 296 exceptions
-                                                  //| gberetta (Greg Beretta) has 162 exceptions
-                                                  //| swong (Solomon Wong) has 151 exceptions
-                                                  //| delee (Derek Lee) has 149 exceptions
-                                                  //| cnishida (Chris Nishida) has 146 exceptions
-                                                  //| jyen (John Yen) has 136 exceptions
-                                                  //|  has 127 exceptions
-                                                  //| salva (Salvador Maiorano) has 114 exceptions
-                                                  //| natp (Nat Peterson) has 112 exceptions
-                                                  //| don (Don Campbell) has 111 exceptions
-                                                  //| kjarvis (Kevin Jarvis) has 107 exceptions
-                                                  //| nng-quinn (Nora Ng-Quinn) has 105 exceptions
-                                                  //| vvegunta (Vinay Vegunta) has 101 exceptions
-                                                  //| dkasad (Darius Kasad) has 97 exceptions
-                                                  //| bcreech (Barbara Creech) 
+  countExceptionsByDeveloper()                    //> java.io.FileNotFoundException: /tmp/exceptions.csv (No such file or directo
+                                                  //| ry)
+                                                  //| 	at java.io.FileInputStream.open0(Native Method)
+                                                  //| 	at java.io.FileInputStream.open(FileInputStream.java:195)
+                                                  //| 	at java.io.FileInputStream.<init>(FileInputStream.java:138)
+                                                  //| 	at scala.io.Source$.fromFile(Source.scala:91)
+                                                  //| 	at scala.io.Source$.fromFile(Source.scala:76)
+                                                  //| 	at scala.io.Source$.fromFile(Source.scala:54)
+                                                  //| 	at week2_5.Currying$$anonfun$main$1.week2_5$Currying$$anonfun$$getValues
+                                                  //| FromFile$1(week2_5.Currying.scala:25)
+                                                  //| 	at week2_5.Currying$$anonfun$main$1$$anonfun$processExceptionsFile$1$1.a
+                                                  //| pply(week2_5.Currying.scala:57)
+                                                  //| 	at week2_5.Currying$$anonfun$main$1$$anonfun$processExceptionsFile$1$1.a
+                                                  //| pply(week2_5.Currying.scala:57)
+                                                  //| 	at week2_5.Currying$$anonfun$main$1.week2_5$Currying$$anonfun$$process$1
+                                                  //| (week2_5.Currying.scala:16)
+                                                  //| 	at week2_5.Currying$$anonfun$main$1$$anonfun$processExceptionsFile$1$2$$
+                                                  //| anonfun$apply$1.appl
                                                   //| Output exceeds cutoff limit.
 }
